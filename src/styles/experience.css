@@ -213,14 +213,14 @@
 }
 
 .hero-copy__title-sand {
-  background: linear-gradient(135deg, #F3E0B5 0%, #D8AA56 100%);
+  background: linear-gradient(135deg, #EBE3D5 0%, #C5B49D 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline;
 }
 
 .hero-copy__title-silicon {
-  background: linear-gradient(135deg, #FFFFFF 0%, #F5D799 40%, #B88432 100%);
+  background: linear-gradient(135deg, #F2E3C9 0%, #B89047 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline;

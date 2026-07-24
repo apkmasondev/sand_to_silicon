@@ -22,7 +22,7 @@ Wszystkie istotne zmiany wprowadzone w projekcie będą dokumentowane w tym plik
 - Naprawiono błąd zamykania i odnawiania ScrollTriggera przy odświeżaniu renderowania dzięki wyizolowaniu postępu do `useRef`.
 
 ### 🎨 Design, typografia i spójność wizualna
-- **Dwutonowy nagłówek Hero**: Tytuł `FROM SAND TO SILICON` otrzymał ciepły, piaskowo-bursztynowy gradient dla słowa `SAND` oraz lśniący, złoto-miedziany gradient dla słowa `SILICON`.
+- **Stonowany nagłówek Hero (Apple Pro)**: Tytuł `FROM SAND TO SILICON` zyskał szlachetny, szampański krem dla słowa `SAND` oraz przydymioną miedź dla `SILICON` (zamiast jaskrawej żółci), zapewniając doskonały kontrast na tle ziaren kwarcu.
 - **Wyróżnienie słów kluczowych (01-06)**: Wyznaczono najważniejsze słowa w nagłówkach etapów (`piasku`, `oczyszczony`, `gładka płytka`, `Światło`, `mikrochip`, `procesor`), ujednolicono świecącą kropkę `•` oraz dostosowano interlinię i tracking.
 - **Ekran finałowy**: Dodano spójny podtytuł narracyjny, świecącą kropkę, nagłówek `FINAŁ — PROCESOR GOTOWY` (eliminujący duplikację numerka 06) oraz złociste wyróżnienie słów `współczesny świat.`.
 - **Harmonizacja palety barw**: Zastąpiono dawny niebieski akcent w `ProgressRail` ciepłym, złoto-miedzianym gradientem z poświatą (`#F5D799` → `#D7A75A` → `#B88432`). Usunięto nieużywane zmienne z `globals.css`.
