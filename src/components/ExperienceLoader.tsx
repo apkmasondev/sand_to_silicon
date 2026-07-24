@@ -2,9 +2,10 @@ import React from "react";
 
 interface ExperienceLoaderProps {
   isLoading: boolean;
+  progress?: number;
 }
 
-export const ExperienceLoader: React.FC<ExperienceLoaderProps> = ({ isLoading }) => {
+export const ExperienceLoader: React.FC<ExperienceLoaderProps> = ({ isLoading, progress = 0 }) => {
   return (
     <div
       className={`experience-loader ${!isLoading ? "experience-loader--hidden" : ""}`}
@@ -13,7 +14,9 @@ export const ExperienceLoader: React.FC<ExperienceLoaderProps> = ({ isLoading })
       aria-label="Ładowanie doświadczenia"
     >
       <div className="experience-loader__spinner" />
-      <div className="experience-loader__text">Ładowanie doświadczenia</div>
+      <div className="experience-loader__text">
+        ŁADOWANIE DOŚWIADCZENIA {progress > 0 ? `${progress}%` : ""}
+      </div>
     </div>
   );
 };

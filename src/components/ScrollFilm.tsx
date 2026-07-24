@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { chapters } from "../data/chapters";
@@ -7,90 +7,125 @@ import { ProgressRail } from "./ProgressRail";
 import { ReplayButton } from "./ReplayButton";
 import { Navbar } from "./Navbar";
 import { ExperienceLoader } from "./ExperienceLoader";
-import { useVideoMetadata } from "../hooks/useVideoMetadata";
+import { useImageSequencePreloader } from "../hooks/useImageSequencePreloader";
 import { VideoErrorFallback } from "./VideoErrorFallback";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const ScrollFilm: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const frameRef = useRef<number | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const triggerRef = useRef<ScrollTrigger | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   const [scrollProgress, setScrollProgress] = useState(0);
-  const { isReady, hasError, errorMessage } = useVideoMetadata(videoRef);
+  const progressRef = useRef(0);
+  const { images, isLoaded, loadProgress, hasError } = useImageSequencePreloader();
+
+  // Draw frame to 2D canvas with cover math
+  const drawFrame = useCallback(
+    (progress: number) => {
+      const canvas = canvasRef.current;
+      if (!canvas || images.length === 0) return;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      const frameIndex = Math.min(
+        images.length - 1,
+        Math.max(0, Math.round(progress * (images.length - 1)))
+      );
+      const img = images[frameIndex];
+      if (!img || !img.complete) return;
+
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+      const imgWidth = img.width || 1280;
+      const imgHeight = img.height || 720;
+
+      const imgRatio = imgWidth / imgHeight;
+      const canvasRatio = canvasWidth / canvasHeight;
+
+      let drawWidth = canvasWidth;
+      let drawHeight = canvasHeight;
+      let drawX = 0;
+      let drawY = 0;
+
+      if (canvasRatio > imgRatio) {
+        drawHeight = canvasWidth / imgRatio;
+        drawY = (canvasHeight - drawHeight) / 2;
+      } else {
+        drawWidth = canvasHeight * imgRatio;
+        drawX = (canvasWidth - drawWidth) / 2;
+      }
+
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+      ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+    },
+    [images]
+  );
+
+  const resizeCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+
+    drawFrame(progressRef.current);
+  }, [drawFrame]);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    const video = videoRef.current;
+    if (!section || !isLoaded) return;
 
-    if (!section || !video || !isReady) return;
+    resizeCanvas();
 
-    // Responsive end scroll length
     const isMobile = window.innerWidth <= 768;
     const scrollDistance = isMobile ? "+=500%" : "+=700%";
-
-    const updateVideoTime = (progress: number) => {
-      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-
-      if (frameRef.current !== null) {
-        cancelAnimationFrame(frameRef.current);
-      }
-
-      frameRef.current = requestAnimationFrame(() => {
-        const fps = 24;
-        const frameCount = Math.floor(video.duration * fps);
-        const frame = Math.round(progress * Math.max(0, frameCount - 1));
-        // Clamp target time safely between 0.001s and duration - 0.01s to avoid EOF stutter
-        const targetTime = Math.min(video.duration - 0.01, Math.max(0.001, frame / fps));
-
-        if (Math.abs(video.currentTime - targetTime) >= 1 / (fps * 2)) {
-          video.currentTime = targetTime;
-        }
-      });
-    };
-
-    // Render initial frame 0 immediately upon ready
-    updateVideoTime(0);
 
     const trigger = ScrollTrigger.create({
       trigger: section,
       start: "top top",
       end: scrollDistance,
       pin: true,
-      scrub: 0.15,
+      scrub: 0.05, // Ultra-responsive scrub for 60/120 FPS feel
       anticipatePin: 1,
       invalidateOnRefresh: true,
       onUpdate: (self) => {
+        progressRef.current = self.progress;
         setScrollProgress(self.progress);
-        updateVideoTime(self.progress);
+        if (animationFrameRef.current !== null) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+        animationFrameRef.current = requestAnimationFrame(() => {
+          drawFrame(self.progress);
+        });
       },
     });
 
     triggerRef.current = trigger;
 
     const handleResize = () => {
+      resizeCanvas();
       ScrollTrigger.refresh();
     };
 
     window.addEventListener("resize", handleResize);
-
-    // Refresh triggers to ensure correct layout dimensions
     ScrollTrigger.refresh();
 
     return () => {
       window.removeEventListener("resize", handleResize);
       trigger.kill();
-      if (frameRef.current !== null) {
-        cancelAnimationFrame(frameRef.current);
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isReady]);
+  }, [isLoaded, drawFrame, resizeCanvas]);
 
-  // Handler to scroll smoothly to target progress position
-  // Uses ScrollTrigger's own start/end to compute correct scroll position
-  // (plain scrollHeight math is wrong when GSAP pins the section)
   const handleNavigateToProgress = (targetProgress: number) => {
     const st = triggerRef.current;
     if (!st) return;
@@ -104,12 +139,12 @@ export const ScrollFilm: React.FC = () => {
   };
 
   if (hasError) {
-    return <VideoErrorFallback message={errorMessage || undefined} chapters={chapters} />;
+    return <VideoErrorFallback message="Nie udało się załadować sekwencji klatek." chapters={chapters} />;
   }
 
   return (
     <>
-      <ExperienceLoader isLoading={!isReady} />
+      <ExperienceLoader isLoading={!isLoaded} progress={loadProgress} />
       <Navbar currentProgress={scrollProgress} onNavigateToProgress={handleNavigateToProgress} />
       <ProgressRail
         progress={scrollProgress}
@@ -121,14 +156,9 @@ export const ScrollFilm: React.FC = () => {
         <h1 className="sr-only">From Sand to Silicon — Jak powstaje procesor</h1>
 
         <div className="scroll-film__video-wrapper">
-          <video
-            ref={videoRef}
+          <canvas
+            ref={canvasRef}
             className="scroll-film__video"
-            src="media/sand-to-silicon-scrub.mp4"
-            poster="media/sand-to-silicon-poster.webp"
-            muted
-            playsInline
-            preload="auto"
             aria-hidden="true"
           />
           <div className="scroll-film__vignette" />

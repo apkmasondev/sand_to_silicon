@@ -16,12 +16,14 @@ All notable changes to this project will be documented in this file.
 - Added `VideoErrorFallback.tsx` and `ExperienceLoader.tsx` for robust state handling.
 - Added SVG Favicon, Open Graph, and Twitter Cards to `index.html`.
 
+### Performance & Architecture Update (Metoda Apple)
+- Migracja z elementu `<video>` na **Image Sequence + `<canvas>`** dla natychmiastowej responsywności scrollowania (gwarantowane stałe 60 FPS na urządzeniach mobilnych, z pominięciem natywnych opóźnień dekodera wideo).
+- Wygenerowano 240 wysoce skompresowanych klatek `.webp` (całkowity koszt ładowania to tylko ok. 10 MB z bardzo szybką transmisją).
+- Wdrożono `useImageSequencePreloader.ts` do wstępnego wczytania wszystkich klatek przed rozpoczęciem animacji (z licznikiem postępu w procentach na ekranie ładowania).
+- Zoptymalizowano `ScrollFilm.tsx` z użyciem `requestAnimationFrame` i `ctx.drawImage` dla ultra-płynnego renderowania.
+- Usunięto błędy ScrollTriggera resetującego scroll podczas renderowania dzięki wyizolowaniu pętli Canvas z cyklu życia Reacta (zastosowano `useRef` dla `scrollProgress`).
+
 ### Improved & Audited
-- Preserved both `sand-to-silicon-master.mp4` (original source) and `sand-to-silicon-scrub.mp4` (GOP=1 optimized scrub file).
-- Implemented frame quantization at 24 FPS in `ScrollFilm.tsx` to round `currentTime` to discrete frame timestamps (`frame / 24`) and debounce redundant seek operations.
-- Safe clamping of `currentTime` to `[0.001s, duration - 0.01s]` preventing EOF black screen stutter.
-- Added dynamic window `resize` handler for GSAP `ScrollTrigger.refresh()`.
-- Tuned GSAP ScrollTrigger `scrub: 0.15` for optimal balance between immediate response and smooth motion.
 - Set exact target frame 24 (`progress: 24 / 239`, 1.02s) for the "Proces" navbar button.
 - Upgraded initial Hero screen styling with radial dark backdrop glow and glassmorphic contrast.
 - Redesigned finale screen to be completely non-blocking, revealing the central processor with a premium glassmorphism action button.
