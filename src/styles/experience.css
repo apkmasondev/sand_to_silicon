@@ -313,7 +313,7 @@
   width: min(560px, calc(100vw - 48px));
   z-index: 10;
   pointer-events: none;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.1s linear, transform 0.1s linear;
 }
 
 .chapter-copy__eyebrow {

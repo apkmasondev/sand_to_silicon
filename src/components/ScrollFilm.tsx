@@ -31,9 +31,12 @@ export const ScrollFilm: React.FC = () => {
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
+      // Film odtwarza się do 88% scrolla, a przez pozostałe 12% przytrzymywana jest ostatnia klatka gotowego procesora (efekt pauzy/oddechu)
+      const videoProgress = Math.min(1, progress / 0.88);
+
       const frameIndex = Math.min(
         images.length - 1,
-        Math.max(0, Math.round(progress * (images.length - 1)))
+        Math.max(0, Math.round(videoProgress * (images.length - 1)))
       );
       const img = images[frameIndex];
       if (!img || !img.complete) return;
@@ -191,18 +194,18 @@ export const ScrollFilm: React.FC = () => {
           </div>
         </div>
 
-        {/* Chapter Overlay Narrative (progress 0.08 to 0.92) */}
-        {scrollProgress >= 0.08 && scrollProgress <= 0.92 && (
+        {/* Chapter Overlay Narrative (progress 0.08 to 0.91) */}
+        {scrollProgress >= 0.08 && scrollProgress <= 0.91 && (
           <ChapterOverlay chapters={chapters} currentProgress={scrollProgress} />
         )}
 
-        {/* Finale Overlay Card (progress > 0.92) */}
+        {/* Finale Overlay Card (progress > 0.93) */}
         <div
           className="finale-copy"
           style={{
-            opacity: scrollProgress > 0.92 ? (scrollProgress - 0.92) * 12.5 : 0,
-            transform: `translateY(${scrollProgress > 0.92 ? (1 - (scrollProgress - 0.92) * 12.5) * 20 : 20}px)`,
-            pointerEvents: scrollProgress > 0.92 ? "auto" : "none",
+            opacity: scrollProgress > 0.93 ? (scrollProgress - 0.93) * 14.28 : 0,
+            transform: `translateY(${scrollProgress > 0.93 ? (1 - (scrollProgress - 0.93) * 14.28) * 20 : 20}px)`,
+            pointerEvents: scrollProgress > 0.93 ? "auto" : "none",
           }}
         >
           <div className="finale-copy__eyebrow">
