@@ -1,0 +1,29 @@
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+
+# Production build
+dist/
+dist-ssr/
+
+# Editor / IDE directories
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# Agent / Workstation files (excluded from repository)
+AGENTS.md
+.agents/
+plan-from-sand-to-silicon-agent.md
+sand-to-silicon-master.mp4
