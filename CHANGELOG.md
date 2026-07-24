@@ -24,5 +24,5 @@ Wszystkie istotne zmiany wprowadzone w projekcie będą dokumentowane w tym plik
 ### 🎨 Design, typografia i spójność wizualna
 - **Dwutonowy nagłówek Hero**: Tytuł `FROM SAND TO SILICON` otrzymał ciepły, piaskowo-bursztynowy gradient dla słowa `SAND` oraz lśniący, złoto-miedziany gradient dla słowa `SILICON`.
 - **Wyróżnienie słów kluczowych (01-06)**: Wyznaczono najważniejsze słowa w nagłówkach etapów (`piasku`, `oczyszczony`, `gładka płytka`, `Światło`, `mikrochip`, `procesor`), ujednolicono świecącą kropkę `•` oraz dostosowano interlinię i tracking.
-- **Ekran finałowy**: Dodano spójny podtytuł narracyjny, świecącą kropkę oraz złociste wyróżnienie słów `współczesny świat.`.
+- **Ekran finałowy**: Dodano spójny podtytuł narracyjny, świecącą kropkę, nagłówek `FINAŁ — PROCESOR GOTOWY` (eliminujący duplikację numerka 06) oraz złociste wyróżnienie słów `współczesny świat.`.
 - **Harmonizacja palety barw**: Zastąpiono dawny niebieski akcent w `ProgressRail` ciepłym, złoto-miedzianym gradientem z poświatą (`#F5D799` → `#D7A75A` → `#B88432`). Usunięto nieużywane zmienne z `globals.css`.

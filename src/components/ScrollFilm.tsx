@@ -207,7 +207,7 @@ export const ScrollFilm: React.FC = () => {
         >
           <div className="finale-copy__eyebrow">
             <span className="hero-copy__eyebrow-dot" />
-            <span>06 — PROCESOR GOTOWY</span>
+            <span>FINAŁ — PROCESOR GOTOWY</span>
           </div>
           <h2 className="finale-copy__title">
             Z piasku powstaje technologia, która napędza <span className="finale-copy__highlight">współczesny świat.</span>
