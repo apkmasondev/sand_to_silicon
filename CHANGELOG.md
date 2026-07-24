@@ -1,30 +1,28 @@
-# Changelog
+# Dziennik zmian (Changelog)
 
-All notable changes to this project will be documented in this file.
+Wszystkie istotne zmiany wprowadzone w projekcie będą dokumentowane w tym pliku.
 
 ## [1.0.0] - 2026-07-24
 
-### Added
-- Created `AGENTS.md` and `.agents/AGENTS.md` containing project goals, rules, and priorities for the AI agent.
-- Created React 19 + Vite + TypeScript application with GSAP ScrollTrigger integration.
-- Implemented `ScrollFilm.tsx` component driving video `currentTime` via scroll scrubbing.
-- Added `ChapterOverlay.tsx` with 6 interactive Polish narrative stages from raw sand to completed processor.
-- Implemented `ProgressRail.tsx` responsive progress bar with section dots.
-- Added `Navbar.tsx` header with quick section navigation.
-- Created `ReplayButton.tsx` finale card action scrolling back to start.
-- Implemented accessibility support for `prefers-reduced-motion` via `useReducedMotion.ts` and `ReducedMotionFallback.tsx`.
-- Added `VideoErrorFallback.tsx` and `ExperienceLoader.tsx` for robust state handling.
-- Added SVG Favicon, Open Graph, and Twitter Cards to `index.html`.
+### 🚀 Architektura i funkcjonalności bazowe
+- Zainicjalizowano projekt w stosie **React 19 + TypeScript + Vite** z integracją **GSAP ScrollTrigger**.
+- Zbudowano główny komponent `ScrollFilm.tsx` obsługujący interaktywne odtwarzanie sterowane ruchem przewijania.
+- Dodano komponent `ChapterOverlay.tsx` prezentujący 6 polskich etapów narracyjnych od surowego piasku do gotowego procesora.
+- Stworzono responsywny wskaźnik postępu `ProgressRail.tsx` z kropkami sekcji oraz płynny nagłówek `Navbar.tsx` z mobilnym drawerem.
+- Dodano przycisk `ReplayButton.tsx` umożliwiający ponowne odtworzenie całej historii z poziomu finału.
+- Wdrożono obsługę dostępności (a11y): ulepszono wsparcie czytników ekranu oraz dodano `ReducedMotionFallback.tsx` dla ustawień `prefers-reduced-motion`.
+- Dodano mechanizmy bezpiecznego ładowania `ExperienceLoader.tsx` oraz awaryjny tryb tekstowy `VideoErrorFallback.tsx`.
+- Skonfigurowano SVG Favicon, Open Graph oraz karty Twitter w `index.html`.
 
-### Performance & Architecture Update (Metoda Apple)
-- Migracja z elementu `<video>` na **Image Sequence + `<canvas>`** dla natychmiastowej responsywności scrollowania (gwarantowane stałe 60 FPS na urządzeniach mobilnych, z pominięciem natywnych opóźnień dekodera wideo).
-- Wygenerowano 240 wysoce skompresowanych klatek `.webp` (całkowity koszt ładowania to tylko ok. 10 MB z bardzo szybką transmisją).
-- Wdrożono `useImageSequencePreloader.ts` do wstępnego wczytania wszystkich klatek przed rozpoczęciem animacji (z licznikiem postępu w procentach na ekranie ładowania).
-- Zoptymalizowano `ScrollFilm.tsx` z użyciem `requestAnimationFrame` i `ctx.drawImage` dla ultra-płynnego renderowania.
-- Usunięto błędy ScrollTriggera resetującego scroll podczas renderowania dzięki wyizolowaniu pętli Canvas z cyklu życia Reacta (zastosowano `useRef` dla `scrollProgress`).
+### ⚡ Optymalizacja wydajności (Metoda Apple 60 FPS)
+- Przeprowadzono migrację z elementu `<video>` na układ **Sekwencja obrazów WebP + HTML5 `<canvas>`**, co gwarantuje stałe 60 FPS na wszystkich urządzeniach mobilnych (z pominięciem natywnych opóźnień dekodera wideo).
+- Wygenerowano sekwencję 240 skompresowanych klatek `.webp` (całkowity rozmiar ok. 10 MB).
+- Dodano hook `useImageSequencePreloader.ts` do płynnego wstępnego ładowania klatek z procentowym wskaźnikiem postępu.
+- Zoptymalizowano renderowanie na płótnie `<canvas>` z wykorzystaniem `requestAnimationFrame`, `ctx.drawImage` oraz dopasowaniem proporcji klatek (cover fill).
+- Naprawiono błąd zamykania i odnawiania ScrollTriggera przy odświeżaniu renderowania dzięki wyizolowaniu postępu do `useRef`.
 
-### Design & Typography Polish
-- **Dwutonowa sekcja Hero**: Tytuł `FROM SAND TO SILICON` zyskał piaskowo-bursztynowy gradient (`SAND`) oraz lśniący, złoto-miedziany gradient (`SILICON`), eliminując monolityczną biel.
-- **Dopracowane etapy pośrednie (01-06)**: Dodano wyróżnienia słów kluczowych złotym gradientem (`piasku`, `oczyszczony`, `gładka płytka`, `Światło`, `mikrochip`, `procesor`), ujednolicono świecącą kropkę `•` we wszystkich nagłówkach oraz dostosowano interlinię i tracking.
-- **Ekran finałowy**: Dodano podtytuł narrative, spójną świecącą kropkę oraz wyróżnienie frazy `współczesny świat.` w złocistej tonacji.
-- **Czystość palety barw & paska postępu**: Wycofano chłodny niebieski akcent (`--accent-cool`), zastępując gradient `ProgressRail` ciepłym złoto-miedzianym odcieniem z poświatą (`#F5D799` → `#D7A75A` → `#B88432`). Usunięto nieużywane zmienne z `globals.css`.
+### 🎨 Design, typografia i spójność wizualna
+- **Dwutonowy nagłówek Hero**: Tytuł `FROM SAND TO SILICON` otrzymał ciepły, piaskowo-bursztynowy gradient dla słowa `SAND` oraz lśniący, złoto-miedziany gradient dla słowa `SILICON`.
+- **Wyróżnienie słów kluczowych (01-06)**: Wyznaczono najważniejsze słowa w nagłówkach etapów (`piasku`, `oczyszczony`, `gładka płytka`, `Światło`, `mikrochip`, `procesor`), ujednolicono świecącą kropkę `•` oraz dostosowano interlinię i tracking.
+- **Ekran finałowy**: Dodano spójny podtytuł narracyjny, świecącą kropkę oraz złociste wyróżnienie słów `współczesny świat.`.
+- **Harmonizacja palety barw**: Zastąpiono dawny niebieski akcent w `ProgressRail` ciepłym, złoto-miedzianym gradientem z poświatą (`#F5D799` → `#D7A75A` → `#B88432`). Usunięto nieużywane zmienne z `globals.css`.
