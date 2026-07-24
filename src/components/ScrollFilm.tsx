@@ -124,8 +124,8 @@ export const ScrollFilm: React.FC = () => {
           <video
             ref={videoRef}
             className="scroll-film__video"
-            src="/media/sand-to-silicon-scrub.mp4"
-            poster="/media/sand-to-silicon-poster.webp"
+            src="media/sand-to-silicon-scrub.mp4"
+            poster="media/sand-to-silicon-poster.webp"
             muted
             playsInline
             preload="auto"
