@@ -28,13 +28,15 @@ export const ProgressRail: React.FC<ProgressRailProps> = ({
           const midPoint = (chap.from + chap.to) / 2;
           const isActive = progress >= chap.from && progress <= chap.to;
 
+          const fullTitle = `${chap.titleBefore || ""}${chap.highlight}${chap.titleAfter || ""}`;
+
           return (
             <button
               key={chap.id}
               type="button"
               className={`progress-rail__dot ${isActive ? "progress-rail__dot--active" : ""}`}
               onClick={() => onSelectChapter(midPoint)}
-              title={chap.title}
+              title={fullTitle}
               aria-label={`Przejdź do etapu: ${chap.eyebrow}`}
             />
           );

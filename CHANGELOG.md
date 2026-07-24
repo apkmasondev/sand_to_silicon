@@ -23,9 +23,8 @@ All notable changes to this project will be documented in this file.
 - Zoptymalizowano `ScrollFilm.tsx` z użyciem `requestAnimationFrame` i `ctx.drawImage` dla ultra-płynnego renderowania.
 - Usunięto błędy ScrollTriggera resetującego scroll podczas renderowania dzięki wyizolowaniu pętli Canvas z cyklu życia Reacta (zastosowano `useRef` dla `scrollProgress`).
 
-### Improved & Audited
-- Set exact target frame 24 (`progress: 24 / 239`, 1.02s) for the "Proces" navbar button.
-- Upgraded initial Hero screen styling with radial dark backdrop glow and glassmorphic contrast.
-- Redesigned finale screen to be completely non-blocking, revealing the central processor with a premium glassmorphism action button.
-- Verified mobile responsiveness at 375x812 viewport (top progress bar, fluid text scaling, zero horizontal overflow).
-- Conducted full audit: zero TypeScript/Vite compilation warnings, zero browser console errors.
+### Design & Typography Polish
+- **Dwutonowa sekcja Hero**: Tytuł `FROM SAND TO SILICON` zyskał piaskowo-bursztynowy gradient (`SAND`) oraz lśniący, złoto-miedziany gradient (`SILICON`), eliminując monolityczną biel.
+- **Dopracowane etapy pośrednie (01-06)**: Dodano wyróżnienia słów kluczowych złotym gradientem (`piasku`, `oczyszczony`, `gładka płytka`, `Światło`, `mikrochip`, `procesor`), ujednolicono świecącą kropkę `•` we wszystkich nagłówkach oraz dostosowano interlinię i tracking.
+- **Ekran finałowy**: Dodano podtytuł narrative, spójną świecącą kropkę oraz wyróżnienie frazy `współczesny świat.` w złocistej tonacji.
+- **Czystość palety barw & paska postępu**: Wycofano chłodny niebieski akcent (`--accent-cool`), zastępując gradient `ProgressRail` ciepłym złoto-miedzianym odcieniem z poświatą (`#F5D799` → `#D7A75A` → `#B88432`). Usunięto nieużywane zmienne z `globals.css`.

@@ -32,7 +32,7 @@ export const ReducedMotionFallback: React.FC<ReducedMotionFallbackProps> = ({ ch
               {chap.eyebrow}
             </div>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", marginBottom: "12px" }}>
-              {chap.title}
+              {chap.titleBefore}{chap.highlight}{chap.titleAfter}
             </h2>
             <p style={{ color: "var(--text-secondary)", lineHeight: 1.6 }}>
               {chap.description}

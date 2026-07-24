@@ -33,7 +33,7 @@ export const VideoErrorFallback: React.FC<VideoErrorFallbackProps> = ({ message,
               {chap.eyebrow}
             </div>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", marginBottom: "8px" }}>
-              {chap.title}
+              {chap.titleBefore}{chap.highlight}{chap.titleAfter}
             </h2>
             <p style={{ color: "var(--text-secondary)" }}>
               {chap.description}

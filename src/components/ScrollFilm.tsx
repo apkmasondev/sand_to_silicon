@@ -177,7 +177,9 @@ export const ScrollFilm: React.FC = () => {
             <span className="hero-copy__eyebrow-dot" />
             <span>DOŚWIADCZENIE INTERAKTYWNE</span>
           </div>
-          <h2 className="hero-copy__title">FROM SAND TO SILICON</h2>
+          <h2 className="hero-copy__title">
+            FROM <span className="hero-copy__title-sand">SAND</span> TO <span className="hero-copy__title-silicon">SILICON</span>
+          </h2>
           <p className="hero-copy__subtitle">
             Od ziaren piasku do serca cyfrowego świata. Zobacz przemianę krzemu w zaawansowany procesor.
           </p>
@@ -203,10 +205,16 @@ export const ScrollFilm: React.FC = () => {
             pointerEvents: scrollProgress > 0.92 ? "auto" : "none",
           }}
         >
-          <div className="finale-copy__eyebrow">06 — PROCESOR GOTOWY</div>
+          <div className="finale-copy__eyebrow">
+            <span className="hero-copy__eyebrow-dot" />
+            <span>06 — PROCESOR GOTOWY</span>
+          </div>
           <h2 className="finale-copy__title">
-            Z piasku powstaje technologia, która napędza współczesny świat.
+            Z piasku powstaje technologia, która napędza <span className="finale-copy__highlight">współczesny świat.</span>
           </h2>
+          <p className="finale-copy__subtitle">
+            Setki skomplikowanych etapów, nanometrowa precyzja i czysty krzem. Przeżyj tę transformację raz jeszcze.
+          </p>
           <ReplayButton onReplay={() => handleNavigateToProgress(0)} />
         </div>
       </section>

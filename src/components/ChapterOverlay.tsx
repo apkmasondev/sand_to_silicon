@@ -20,8 +20,15 @@ export const ChapterOverlay: React.FC<ChapterOverlayProps> = ({ chapters, curren
       className="chapter-copy"
       aria-live="polite"
     >
-      <div className="chapter-copy__eyebrow">{activeChapter.eyebrow}</div>
-      <h2 className="chapter-copy__title">{activeChapter.title}</h2>
+      <div className="chapter-copy__eyebrow">
+        <span className="hero-copy__eyebrow-dot" />
+        <span>{activeChapter.eyebrow}</span>
+      </div>
+      <h2 className="chapter-copy__title">
+        {activeChapter.titleBefore}
+        <span className="chapter-copy__highlight">{activeChapter.highlight}</span>
+        {activeChapter.titleAfter}
+      </h2>
       <p className="chapter-copy__description">{activeChapter.description}</p>
     </article>
   );

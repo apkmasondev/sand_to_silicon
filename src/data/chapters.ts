@@ -3,7 +3,9 @@ export interface Chapter {
   from: number; // progress (0.0 to 1.0)
   to: number;   // progress (0.0 to 1.0)
   eyebrow: string;
-  title: string;
+  titleBefore?: string;
+  highlight: string;
+  titleAfter?: string;
   description: string;
 }
 
@@ -13,7 +15,8 @@ export const chapters: Chapter[] = [
     from: 0.08,
     to: 0.24,
     eyebrow: "01 — SUROWIEC",
-    title: "Wszystko zaczyna się od piasku.",
+    titleBefore: "Wszystko zaczyna się od ",
+    highlight: "piasku.",
     description: "Krzem występuje w minerałach otaczających nas każdego dnia. To pierwszy krok w drodze do zaawansowanej mikroelektroniki."
   },
   {
@@ -21,7 +24,8 @@ export const chapters: Chapter[] = [
     from: 0.24,
     to: 0.40,
     eyebrow: "02 — OCZYSZCZANIE",
-    title: "Krzem zostaje oczyszczony.",
+    titleBefore: "Krzem zostaje ",
+    highlight: "oczyszczony.",
     description: "Materiał musi osiągnąć niezwykle wysoką czystość chemiczną, zanim stanie się podstawą nowoczesnego mikrochipa."
   },
   {
@@ -29,15 +33,17 @@ export const chapters: Chapter[] = [
     from: 0.40,
     to: 0.56,
     eyebrow: "03 — WAFER",
-    title: "Powstaje idealnie gładka płytka.",
-    description: "Monokryształ krzemu jest precyzyjnie cięty na cienkie plastry i polerowany do uzbrojenia w niemal lustrzaną powierzchnię."
+    titleBefore: "Powstaje idealnie ",
+    highlight: "gładka płytka.",
+    description: "Monokryształ krzemu jest precyzyjnie cięty na cienkie plastry i polerowany do uzyskania niemal lustrzanej powierzchni."
   },
   {
     id: "pattern",
     from: 0.56,
     to: 0.72,
     eyebrow: "04 — WZÓR",
-    title: "Światło zapisuje strukturę układu.",
+    highlight: "Światło ",
+    titleAfter: "zapisuje strukturę układu.",
     description: "Metodą fotolitografii niezwykle precyzyjny wzór wyznacza miejsca mikroskopijnych tranzystorów i ścieżek prądowych."
   },
   {
@@ -45,7 +51,8 @@ export const chapters: Chapter[] = [
     from: 0.72,
     to: 0.88,
     eyebrow: "05 — TRANZYSTORY",
-    title: "Warstwa po warstwie powstaje mikrochip.",
+    titleBefore: "Warstwa po warstwie powstaje ",
+    highlight: "mikrochip.",
     description: "Miliardy miniaturowych przełączników układają się w przestrzenną sieć połączeń o nanometrowej dokładności."
   },
   {
@@ -53,7 +60,8 @@ export const chapters: Chapter[] = [
     from: 0.88,
     to: 0.94,
     eyebrow: "06 — PROCESOR",
-    title: "Z piasku powstaje procesor.",
+    titleBefore: "Z piasku powstaje ",
+    highlight: "procesor.",
     description: "Gotowy układ półprzewodnikowy trafia do urządzeń technologicznych, które napędzają nasz cyfrowy świat."
   }
 ];
