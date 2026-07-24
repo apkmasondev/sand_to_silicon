@@ -112,6 +112,7 @@
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s var(--ease-out-expo);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .experience-nav__button:hover {
@@ -258,31 +259,42 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.35s var(--ease-out-expo);
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .hero-copy__scroll-hint {
   animation: pulseHint 2.5s infinite ease-in-out;
 }
 
-.hero-copy__scroll-hint:hover,
-.replay-button:hover {
-  background: rgba(28, 24, 20, 0.95);
-  border-color: rgba(215, 167, 90, 0.8);
-  color: #FFFFFF;
-  transform: translateY(-2px);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(215, 167, 90, 0.25);
+@media (hover: hover) {
+  .hero-copy__scroll-hint:hover,
+  .replay-button:hover {
+    background: rgba(28, 24, 20, 0.95);
+    border-color: rgba(215, 167, 90, 0.8);
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(215, 167, 90, 0.25);
+  }
+
+  .hero-copy__scroll-hint svg,
+  .replay-button svg {
+    width: 16px;
+    height: 16px;
+    color: #FFFFFF;
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+
+  .replay-button:hover svg {
+    transform: rotate(-180deg);
+  }
 }
 
-.hero-copy__scroll-hint svg,
-.replay-button svg {
-  width: 16px;
-  height: 16px;
-  color: #FFFFFF;
-  transition: transform 0.4s var(--ease-out-expo);
-}
-
-.replay-button:hover svg {
-  transform: rotate(-180deg);
+.hero-copy__scroll-hint:active,
+.replay-button:active {
+  transform: translateY(1px);
+  background: rgba(18, 16, 14, 0.95);
 }
 
 @keyframes pulseHint {
