@@ -25,8 +25,9 @@ npm run build
 
 ## Funkcjonalności
 
-2. **Wydajność klasy Apple**: Rozbicie wideo na sekwencję 240 skompresowanych klatek WebP renderowanych natychmiastowo na elemencie `<canvas>`, co gwarantuje stałe 60 FPS (nawet na telefonach), ponieważ dekompresja WebP i rysowanie na canvasie jest sprzętowo akcelerowane i nie wymaga uruchamiania dekodera wideo.
+1. **Scroll-Driven Canvas Scrubbing**: Animacja odtwarza się do przodu podczas scrollowania w dół i cofa przy scrollowaniu w górę — w pełni sterowana przez użytkownika.
+2. **Wydajność klasy Apple**: Sekwencja 240 skompresowanych klatek WebP renderowanych natychmiastowo na elemencie `<canvas>`, co gwarantuje stałe 60 FPS nawet na telefonach.
 3. **HTML Narrative Overlay**: Teksty etapów umieszczone jako czysty HTML nad animacją.
-4. **Pasek postępu i nawigacja**: Responsywny wskaźnik postępu oraz płynna nawigacja po rozdziałach (teraz także ukryte mobilne menu typu drawer).
+4. **Pasek postępu i nawigacja**: Responsywny wskaźnik postępu oraz płynna nawigacja po rozdziałach z mobilnym menu drawer.
 5. **Dostępność (a11y)**: Obsługa `prefers-reduced-motion` oraz czytników ekranu.
-6. **Fallbacki**: Ładowany loader z paskiem postępu dla wczytywania klatek WebP.
+6. **Fallbacki**: Loader z paskiem postępu dla wczytywania klatek WebP i fallback tekstowy przy błędach.

@@ -19,10 +19,7 @@ export const ProgressRail: React.FC<ProgressRailProps> = ({
       <div className="progress-rail__track">
         <div
           className="progress-rail__fill"
-          style={{
-            height: `${percentage}%`,
-            width: `${percentage}%`,
-          }}
+          style={{ "--progress": `${percentage}%` } as React.CSSProperties}
         />
       </div>
 

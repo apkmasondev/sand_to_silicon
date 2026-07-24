@@ -27,6 +27,6 @@ AGENTS.md
 .agents/
 plan-from-sand-to-silicon-agent.md
 sand-to-silicon-master.mp4
-.agents/  
-AGENTS.md  
-plan-from-sand-to-silicon-agent.md 
+
+# Large video files (project uses WebP image sequences instead)
+public/media/*.mp4

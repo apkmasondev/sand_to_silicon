@@ -24,10 +24,8 @@
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
-  object-position: center;
   pointer-events: none;
-  will-change: contents;
+  will-change: transform;
 }
 
 /* Subtle Vignette Gradient Overlay to ensure readable text over bright frames */
@@ -93,6 +91,11 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Desktop: drawer is a simple inline wrapper */
+.experience-nav__drawer {
+  display: contents;
 }
 
 .experience-nav__button {
@@ -374,7 +377,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 0%;
+  height: var(--progress, 0%);
   background: linear-gradient(to bottom, var(--accent-warm), var(--accent-cool));
   border-radius: 2px;
   transition: height 0.1s linear;
@@ -477,7 +480,7 @@
   }
 
   .progress-rail__fill {
-    width: 0%;
+    width: var(--progress, 0%);
     height: 100%;
     transition: width 0.1s linear;
   }
