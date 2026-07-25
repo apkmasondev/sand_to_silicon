@@ -12,8 +12,8 @@ export interface Chapter {
 export const chapters: Chapter[] = [
   {
     id: "sand",
-    from: 0.08,
-    to: 0.23,
+    from: 0.04,
+    to: 0.1588,
     eyebrow: "01 — SUROWIEC",
     titleBefore: "Wszystko zaczyna się od ",
     highlight: "piasku.",
@@ -21,8 +21,8 @@ export const chapters: Chapter[] = [
   },
   {
     id: "purification",
-    from: 0.23,
-    to: 0.38,
+    from: 0.1588,
+    to: 0.3640,
     eyebrow: "02 — OCZYSZCZANIE",
     titleBefore: "Krzem zostaje ",
     highlight: "oczyszczony.",
@@ -30,8 +30,8 @@ export const chapters: Chapter[] = [
   },
   {
     id: "wafer",
-    from: 0.38,
-    to: 0.53,
+    from: 0.3640,
+    to: 0.4608,
     eyebrow: "03 — WAFER",
     titleBefore: "Powstaje idealnie ",
     highlight: "gładka płytka.",
@@ -39,8 +39,8 @@ export const chapters: Chapter[] = [
   },
   {
     id: "pattern",
-    from: 0.53,
-    to: 0.68,
+    from: 0.4608,
+    to: 0.6880,
     eyebrow: "04 — WZÓR",
     highlight: "Światło ",
     titleAfter: "zapisuje strukturę układu.",
@@ -48,8 +48,8 @@ export const chapters: Chapter[] = [
   },
   {
     id: "transistors",
-    from: 0.68,
-    to: 0.83,
+    from: 0.6880,
+    to: 0.8350,
     eyebrow: "05 — TRANZYSTORY",
     titleBefore: "Warstwa po warstwie powstaje ",
     highlight: "mikrochip.",
@@ -57,8 +57,8 @@ export const chapters: Chapter[] = [
   },
   {
     id: "processor",
-    from: 0.83,
-    to: 0.91,
+    from: 0.8350,
+    to: 0.9150,
     eyebrow: "06 — PROCESOR",
     titleBefore: "Z piasku powstaje ",
     highlight: "procesor.",

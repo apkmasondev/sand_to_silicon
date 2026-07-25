@@ -167,13 +167,13 @@ export const ScrollFilm: React.FC = () => {
           <div className="scroll-film__vignette" />
         </div>
 
-        {/* Hero Banner (visible at start progress < 0.08) */}
+        {/* Hero Banner (visible at start progress < 0.04) */}
         <div
           className="hero-copy"
           style={{
-            opacity: scrollProgress < 0.08 ? 1 - scrollProgress * 12.5 : 0,
+            opacity: scrollProgress < 0.04 ? 1 - scrollProgress * 25 : 0,
             transform: `translateY(${scrollProgress * -40}px)`,
-            pointerEvents: scrollProgress < 0.08 ? "auto" : "none",
+            pointerEvents: scrollProgress < 0.04 ? "auto" : "none",
           }}
         >
           <div className="hero-copy__eyebrow">
@@ -194,8 +194,8 @@ export const ScrollFilm: React.FC = () => {
           </div>
         </div>
 
-        {/* Chapter Overlay Narrative (progress 0.08 to 0.91) */}
-        {scrollProgress >= 0.08 && scrollProgress <= 0.91 && (
+        {/* Chapter Overlay Narrative (progress 0.04 to 0.915) */}
+        {scrollProgress >= 0.04 && scrollProgress <= 0.915 && (
           <ChapterOverlay chapters={chapters} currentProgress={scrollProgress} />
         )}
 

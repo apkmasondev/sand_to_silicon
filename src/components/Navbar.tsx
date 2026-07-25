@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentProgress = 0, onNavigateT
               type="button"
               className={`experience-nav__button ${isProces ? "experience-nav__button--active" : ""}`}
               aria-current={isProces ? "step" : undefined}
-              onClick={() => handleSelect(24 / 239)}
+              onClick={() => handleSelect(0.0994)}
             >
               Proces
             </button>
