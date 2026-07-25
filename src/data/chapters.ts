@@ -40,7 +40,7 @@ export const chapters: Chapter[] = [
   {
     id: "pattern",
     from: 0.4608,
-    to: 0.6880,
+    to: 0.5702,
     eyebrow: "04 — WZÓR",
     highlight: "Światło ",
     titleAfter: "zapisuje strukturę układu.",
