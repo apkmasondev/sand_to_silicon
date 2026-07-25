@@ -49,7 +49,7 @@ export const chapters: Chapter[] = [
   {
     id: "transistors",
     from: 0.6880,
-    to: 0.8350,
+    to: 0.8658,
     eyebrow: "05 — TRANZYSTORY",
     titleBefore: "Warstwa po warstwie powstaje ",
     highlight: "mikrochip.",
