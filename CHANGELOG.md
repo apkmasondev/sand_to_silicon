@@ -8,7 +8,6 @@ Audyt kodu i poprawności działania (GSAP/ScrollTrigger, canvas, ładowanie kla
 
 ### 🐛 Poprawki błędów
 - **Dziura i nakładka w zakresach rozdziałów**: dostrajanie punktów nawigacji do klatek wideo rozjechało zakresy narracji — między 57% a 69% postępu nie pojawiał się żaden tekst, a w przedziale 83,5–86,6% dwa rozdziały były aktywne jednocześnie (tekst „06 — PROCESOR” wskakiwał potem skokowo, z pominięciem fade-inu, a na pasku postępu świeciły dwie kropki). Punkty nawigacji przeniesiono do osobnego pola `frame`, dzięki czemu zakresy `from`/`to` są znów ciągłe i rozłączne. Docelowe klatki (27, 71, 112, 140, 211, 238) pozostały bez zmian.
-- **Kropki na pasku postępu w złym miejscu**: markery były rozłożone równomiernie (`space-between`) *pod* torem paska, zamiast leżeć na nim w pozycji odpowiadającej etapowi. Teraz każda kropka stoi dokładnie tam, dokąd prowadzi.
 - **ScrollTrigger nie sprzątał po sobie**: `trigger.kill()` bez `revert` zostawiał w DOM spacer pinowania i style sekcji — zamieniono na `kill(true)`.
 - **Podwójne przeliczanie przy zmianie rozmiaru**: ręczny listener wołał `ScrollTrigger.refresh()`, mimo że ScrollTrigger sam odświeża się przy `resize`; przerysowanie canvasu podpięto do zdarzenia `refresh`, a osobny, ograniczony do `requestAnimationFrame` listener obsługuje wyłącznie skalowanie bufora.
 - **Przeciek pamięci w preloaderze**: przy odmontowaniu 240 obrazów zostawało z aktywnymi handlerami i trwającymi pobraniami; teraz handlery są odpinane, a niedokończone żądania przerywane.
@@ -29,6 +28,12 @@ Audyt kodu i poprawności działania (GSAP/ScrollTrigger, canvas, ładowanie kla
 - `devicePixelRatio` ograniczony do 2× i bufor canvasu przypisywany tylko przy realnej zmianie rozmiaru.
 - Podpowiedzi kolejności ładowania: pierwsze 16 klatek z `fetchPriority: high`, reszta `low`, wszystkie z `decoding: async`.
 - Ścieżki klatek budowane z `import.meta.env.BASE_URL` (poprawne działanie pod dowolnym `base`).
+
+### 🔍 SEO / Open Graph
+- `og:image` i `twitter:image` wskazywały ścieżkę względną, której crawlery nie rozwiązują — zamienione na absolutne URL-e pod `https://apkmason.dev/sand_to_silicon/`. Dodano `og:url`, `og:image:alt` oraz `link rel="canonical"`.
+
+### 🎨 Układ
+- Pasek postępu zachowuje pierwotny układ: tor i kolumna równomiernie rozstawionych kropek jedna pod drugą (świadoma decyzja projektowa, nie błąd).
 
 ### 📄 Dokumentacja
 - README doprowadzone do zgodności z kodem: brak elementu `<video>`, realny rozmiar sekwencji (~14 MB, nie 10 MB), opis mechaniki 88%/12%, rozdzielenie zakresów narracji od klatek nawigacji, `npm run lint`, wdrożenie na GitHub Pages.

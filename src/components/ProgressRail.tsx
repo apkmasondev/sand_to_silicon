@@ -36,9 +36,6 @@ export const ProgressRail: React.FC<ProgressRailProps> = ({
               key={chap.id}
               type="button"
               className={`progress-rail__dot ${isActive ? "progress-rail__dot--active" : ""}`}
-              // Kropka siedzi dokładnie tam, dokąd prowadzi — inaczej pozycja
-              // na osi nie ma nic wspólnego z etapem, do którego skacze.
-              style={{ "--dot-position": `${navProgress * 100}%` } as React.CSSProperties}
               onClick={() => onSelectChapter(navProgress)}
               title={getFullTitle(chap)}
               aria-label={`Przejdź do etapu: ${chap.eyebrow}`}
