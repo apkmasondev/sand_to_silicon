@@ -2,24 +2,17 @@ import React from "react";
 import { Chapter } from "../data/chapters";
 
 interface ChapterOverlayProps {
-  chapters: Chapter[];
+  chapter: Chapter;
   currentProgress: number;
 }
 
-export const ChapterOverlay: React.FC<ChapterOverlayProps> = ({ chapters, currentProgress }) => {
-  // Znajdź aktywny rozdział na podstawie aktualnego postępu
-  const activeChapter = chapters.find(
-    (chap) => currentProgress >= chap.from && currentProgress <= chap.to
-  );
-
-  if (!activeChapter) return null;
-
+export const ChapterOverlay: React.FC<ChapterOverlayProps> = ({ chapter, currentProgress }) => {
   // Obliczenie płynnego fade-in (wejścia) oraz fade-out (wyjścia)
-  const duration = activeChapter.to - activeChapter.from;
+  const duration = chapter.to - chapter.from;
   const fadeWidth = duration * 0.22; // 22% czasu trwania rozdziału na łagodne przejścia
 
-  const distFromStart = currentProgress - activeChapter.from;
-  const distFromEnd = activeChapter.to - currentProgress;
+  const distFromStart = currentProgress - chapter.from;
+  const distFromEnd = chapter.to - currentProgress;
 
   let opacity = 1;
   let translateY = 0;
@@ -40,25 +33,27 @@ export const ChapterOverlay: React.FC<ChapterOverlayProps> = ({ chapters, curren
 
   return (
     <article
-      key={activeChapter.id}
+      key={chapter.id}
       className="chapter-copy"
       style={{
         opacity,
         transform: `translateY(${translateY}px)`,
         willChange: "opacity, transform",
       }}
-      aria-live="polite"
+      /* Ogłaszaniem etapów zajmuje się trwały region live w ScrollFilm — tu
+         aria-live powodowałoby podwójne odczyty przy każdej podmianie. */
+      aria-hidden="true"
     >
       <div className="chapter-copy__eyebrow">
         <span className="hero-copy__eyebrow-dot" />
-        <span>{activeChapter.eyebrow}</span>
+        <span>{chapter.eyebrow}</span>
       </div>
       <h2 className="chapter-copy__title">
-        {activeChapter.titleBefore}
-        <span className="chapter-copy__highlight">{activeChapter.highlight}</span>
-        {activeChapter.titleAfter}
+        {chapter.titleBefore}
+        <span className="chapter-copy__highlight">{chapter.highlight}</span>
+        {chapter.titleAfter}
       </h2>
-      <p className="chapter-copy__description">{activeChapter.description}</p>
+      <p className="chapter-copy__description">{chapter.description}</p>
     </article>
   );
 };

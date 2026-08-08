@@ -1,15 +1,18 @@
 import React from "react";
-import { Chapter } from "../data/chapters";
+import { Chapter, chapterNavProgress, getFullTitle } from "../data/chapters";
 
 interface ProgressRailProps {
   progress: number; // 0 to 1
   chapters: Chapter[];
+  /** Indeks aktywnego rozdziału wyliczony w jednym miejscu (-1 = hero/finał). */
+  activeIndex: number;
   onSelectChapter: (progress: number) => void;
 }
 
 export const ProgressRail: React.FC<ProgressRailProps> = ({
   progress,
   chapters,
+  activeIndex,
   onSelectChapter,
 }) => {
   const percentage = Math.min(100, Math.max(0, progress * 100));
@@ -24,20 +27,22 @@ export const ProgressRail: React.FC<ProgressRailProps> = ({
       </div>
 
       <div className="progress-rail__markers">
-        {chapters.map((chap) => {
-          const midPoint = (chap.from + chap.to) / 2;
-          const isActive = progress >= chap.from && progress <= chap.to;
-
-          const fullTitle = `${chap.titleBefore || ""}${chap.highlight}${chap.titleAfter || ""}`;
+        {chapters.map((chap, index) => {
+          const navProgress = chapterNavProgress(chap);
+          const isActive = index === activeIndex;
 
           return (
             <button
               key={chap.id}
               type="button"
               className={`progress-rail__dot ${isActive ? "progress-rail__dot--active" : ""}`}
-              onClick={() => onSelectChapter(midPoint)}
-              title={fullTitle}
+              // Kropka siedzi dokładnie tam, dokąd prowadzi — inaczej pozycja
+              // na osi nie ma nic wspólnego z etapem, do którego skacze.
+              style={{ "--dot-position": `${navProgress * 100}%` } as React.CSSProperties}
+              onClick={() => onSelectChapter(navProgress)}
+              title={getFullTitle(chap)}
               aria-label={`Przejdź do etapu: ${chap.eyebrow}`}
+              aria-current={isActive ? "step" : undefined}
             />
           );
         })}

@@ -111,7 +111,11 @@
   padding: 8px 20px;
   border-radius: 30px;
   cursor: pointer;
-  transition: all 0.3s var(--ease-out-expo);
+  /* Celowo bez `all`: przy otwieraniu drawera przycisk dziedziczy zmianę
+     `visibility`, a `transition: all` rozciągnęłaby ją w czasie i przycisk
+     przez 0.3 s pozostawałby niefokusowalny. */
+  transition: color 0.3s var(--ease-out-expo), background 0.3s var(--ease-out-expo),
+    border-color 0.3s var(--ease-out-expo), box-shadow 0.3s var(--ease-out-expo);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -407,25 +411,26 @@
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
 }
 
-/* Progress Rail */
+/* Progress Rail — tor i kropki etapów leżą na tej samej osi,
+   dzięki czemu pozycja kropki odpowiada realnemu postępowi etapu. */
 .progress-rail {
   position: fixed;
   right: clamp(16px, 3vw, 40px);
   top: 50%;
   transform: translateY(-50%);
   z-index: 90;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: flex-end;
+  width: 16px;
+  height: 200px;
 }
 
 .progress-rail__track {
+  position: absolute;
+  top: 0;
+  right: 6px;
   width: 3px;
-  height: 200px;
+  height: 100%;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
-  position: relative;
   overflow: hidden;
 }
 
@@ -442,25 +447,28 @@
 }
 
 .progress-rail__markers {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 200px;
+  position: absolute;
+  inset: 0;
 }
 
 .progress-rail__dot {
+  position: absolute;
+  top: var(--dot-position, 0%);
+  right: 3.5px;
   width: 8px;
   height: 8px;
+  padding: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.25);
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transform: translate(50%, -50%);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .progress-rail__dot--active {
   background: var(--accent-warm);
-  transform: scale(1.5);
+  transform: translate(50%, -50%) scale(1.5);
   box-shadow: 0 0 10px var(--accent-warm);
 }
 
@@ -506,6 +514,23 @@
   color: var(--text-secondary);
 }
 
+.experience-loader__bar {
+  width: min(280px, 70vw);
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.experience-loader__bar-fill {
+  width: var(--load-progress, 0%);
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(to right, #F5D799 0%, #D7A75A 60%, #B88432 100%);
+  box-shadow: 0 0 12px rgba(215, 167, 90, 0.45);
+  transition: width 0.25s ease;
+}
+
 /* Mobile Adjustments */
 @media (max-width: 768px) {
   .chapter-copy {
@@ -528,11 +553,15 @@
     top: 70px;
     left: 0;
     width: 100%;
+    height: 3px;
     transform: none;
     padding: 0 20px;
   }
 
   .progress-rail__track {
+    position: relative;
+    top: auto;
+    right: auto;
     width: 100%;
     height: 3px;
   }
@@ -595,13 +624,20 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: all 0.35s var(--ease-out-expo);
+    /* `transition: all` opóźniałoby przełączenie `visibility` na `visible`,
+       przez co focus() na pierwszym przycisku drawera nie zadziałałby.
+       Widoczność przełączamy natychmiast przy otwarciu i z opóźnieniem przy zamykaniu. */
+    transition: opacity 0.35s var(--ease-out-expo), visibility 0s linear 0.35s;
   }
 
   .experience-nav__drawer--open {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    transition: opacity 0.35s var(--ease-out-expo), visibility 0s linear 0s;
+    /* Bez tego przesuwanie palcem po nakładce dalej przewijałoby film pod spodem. */
+    touch-action: none;
+    overscroll-behavior: contain;
   }
 
   .experience-nav__menu {

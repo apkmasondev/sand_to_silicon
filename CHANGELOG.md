@@ -2,6 +2,37 @@
 
 Wszystkie istotne zmiany wprowadzone w projekcie będą dokumentowane w tym pliku.
 
+## [1.0.1] - 2026-08-09
+
+Audyt kodu i poprawności działania (GSAP/ScrollTrigger, canvas, ładowanie klatek, a11y, RWD).
+
+### 🐛 Poprawki błędów
+- **Dziura i nakładka w zakresach rozdziałów**: dostrajanie punktów nawigacji do klatek wideo rozjechało zakresy narracji — między 57% a 69% postępu nie pojawiał się żaden tekst, a w przedziale 83,5–86,6% dwa rozdziały były aktywne jednocześnie (tekst „06 — PROCESOR” wskakiwał potem skokowo, z pominięciem fade-inu, a na pasku postępu świeciły dwie kropki). Punkty nawigacji przeniesiono do osobnego pola `frame`, dzięki czemu zakresy `from`/`to` są znów ciągłe i rozłączne. Docelowe klatki (27, 71, 112, 140, 211, 238) pozostały bez zmian.
+- **Kropki na pasku postępu w złym miejscu**: markery były rozłożone równomiernie (`space-between`) *pod* torem paska, zamiast leżeć na nim w pozycji odpowiadającej etapowi. Teraz każda kropka stoi dokładnie tam, dokąd prowadzi.
+- **ScrollTrigger nie sprzątał po sobie**: `trigger.kill()` bez `revert` zostawiał w DOM spacer pinowania i style sekcji — zamieniono na `kill(true)`.
+- **Podwójne przeliczanie przy zmianie rozmiaru**: ręczny listener wołał `ScrollTrigger.refresh()`, mimo że ScrollTrigger sam odświeża się przy `resize`; przerysowanie canvasu podpięto do zdarzenia `refresh`, a osobny, ograniczony do `requestAnimationFrame` listener obsługuje wyłącznie skalowanie bufora.
+- **Przeciek pamięci w preloaderze**: przy odmontowaniu 240 obrazów zostawało z aktywnymi handlerami i trwającymi pobraniami; teraz handlery są odpinane, a niedokończone żądania przerywane.
+- **Loader mógł kręcić się w nieskończoność**: jeśli któreś żądanie nigdy nie zwróciło `load` ani `error`, warunek zakończenia nie był spełniany. Dodano limit 30 s i weryfikację `naturalWidth` (obraz „complete”, ale pusty, nie liczy się już jako wczytany).
+- **Niedziałający fokus w mobilnym drawerze**: `transition: all` rozciągało w czasie zmianę `visibility`, przez co pierwszy przycisk menu był przez ~0,3 s niefokusowalny; przejścia ograniczono do właściwości wizualnych.
+- **Karta finału nie osiągała pełnej nieprzezroczystości** (0,9938 zamiast 1) i pozostawała w kolejności Tab, mimo że była niewidoczna.
+- **Proporcje klatki liczone z `img.width`** z fallbackiem 1280×720 — zamieniono na `naturalWidth`/`naturalHeight`.
+
+### ♿ Dostępność
+- Trwały region `aria-live` w `ScrollFilm` ogłasza kolejne etapy (poprzednio region powstawał razem z treścią, więc czytniki go nie odczytywały); z widocznej narracji usunięto duplikujące `aria-live`.
+- Mobilny drawer: `aria-controls`, zamykanie klawiszem Escape z powrotem fokusu na hamburger, pułapka fokusu dla Tab/Shift+Tab, zamykanie kliknięciem w tło oraz `touch-action: none` blokujące przewijanie filmu pod nakładką.
+- Niewidoczne warstwy hero i finału oznaczone `inert`, kropki paska postępu dostały `aria-current`.
+- Loader: prawdziwy `role="progressbar"` z `aria-valuenow` i widocznym paskiem postępu.
+- Globalne zabezpieczenie `@media (prefers-reduced-motion: reduce)` wyłączające animacje i przejścia.
+
+### ⚡ Wydajność
+- Kwantyzacja postępu (0,001) ogranicza przerysowania drzewa Reacta przy każdym ticku ScrollTriggera.
+- `devicePixelRatio` ograniczony do 2× i bufor canvasu przypisywany tylko przy realnej zmianie rozmiaru.
+- Podpowiedzi kolejności ładowania: pierwsze 16 klatek z `fetchPriority: high`, reszta `low`, wszystkie z `decoding: async`.
+- Ścieżki klatek budowane z `import.meta.env.BASE_URL` (poprawne działanie pod dowolnym `base`).
+
+### 📄 Dokumentacja
+- README doprowadzone do zgodności z kodem: brak elementu `<video>`, realny rozmiar sekwencji (~14 MB, nie 10 MB), opis mechaniki 88%/12%, rozdzielenie zakresów narracji od klatek nawigacji, `npm run lint`, wdrożenie na GitHub Pages.
+
 ## [1.0.0] - 2026-07-24
 
 ### 🚀 Architektura i funkcjonalności bazowe
